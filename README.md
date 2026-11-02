@@ -67,5 +67,12 @@ git remote add origin https://github.com/<USER>/<REPO>.git
 git push -u origin main
 ```
 
+## 과제 요약
+
+- 실행방법: `npx.cmd --yes serve . -l 8080` 실행 후 `http://localhost:8080` 접속
+- 사용환경과 모델: Windows, Node.js 18 이상, TensorFlow.js 기반 실제 MNIST 학습 모델
+- 실제 검증결과: `node --check app.js` 통과, 로컬 HTTP 서버에서 `index.html`과 `app.js` HTTP 200 확인
+- 미해결사항: GitHub 업로드와 GitHub Pages 배포는 사용자 계정 인증 및 저장소 설정이 필요함
+
 GitHub 저장소의 `Settings → Pages`에서 배포 Source를 `GitHub Actions`로 선택합니다. 이후 `main` 브랜치에 push하면 `.github/workflows/deploy.yml`이 구문 검증 후 GitHub Pages에 자동 배포합니다. 실제 GitHub 업로드와 배포에는 사용자의 GitHub 인증이 필요하며, 인증정보는 코드에 저장하지 않습니다.
 
