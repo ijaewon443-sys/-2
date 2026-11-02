@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="캔버스에 그린 손글씨 숫자를 MNIST 모델로 인식합니다." />
+    <title>Digit Lens | 손글씨 숫자 인식</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="./"><span class="brand-mark">◎</span> DIGIT LENS</a>
+        <div class="model-pill"><span class="status-dot" id="statusDot"></span><span id="modelStatus">모델 로딩 중…</span></div>
+      </header>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">MNIST / LIVE INFERENCE</p>
+          <h1>그린 숫자를<br /><em>읽어볼게요.</em></h1>
+          <p class="lede">아래 캔버스에 숫자 하나를 크게 그려보세요.<br />학습된 신경망이 0부터 9까지의 확률을 계산합니다.</p>
+        </div>
+        <div class="hero-note"><span class="note-index">01</span><span>DRAW<br />&amp; DISCOVER</span></div>
+      </section>
+
+      <section class="workspace" aria-label="숫자 인식 영역">
+        <div class="draw-panel panel">
+          <div class="panel-heading"><div><span class="section-kicker">INPUT</span><h2>숫자를 그려주세요</h2></div><span class="canvas-size">280 × 280</span></div>
+          <div class="canvas-wrap"><canvas id="drawCanvas" width="280" height="280" aria-label="손글씨 숫자 입력 캔버스"></canvas><span class="canvas-hint">여기에 그리기</span></div>
+          <div class="controls"><button class="button ghost" id="clearButton" type="button">지우기 <span>↺</span></button><button class="button primary" id="predictButton" type="button" disabled>숫자 인식 <span>→</span></button></div>
+          <p class="error" id="errorMessage" role="alert" hidden></p>
+        </div>
+
+        <div class="result-panel panel">
+          <div class="panel-heading"><div><span class="section-kicker">OUTPUT</span><h2>예측 결과</h2></div><span class="live-label">LIVE</span></div>
+          <div class="prediction"><span class="prediction-label">가장 높은 확률</span><strong id="predictionValue">—</strong><p id="confidenceText">숫자를 그린 뒤 인식 버튼을 눌러보세요.</p></div>
+          <div class="probabilities" id="probabilities" aria-label="숫자별 예측 확률"></div>
+          <div class="model-meta"><span>MODEL</span><span>TensorFlow.js · MNIST</span></div>
+        </div>
+      </section>
+
+      <footer><span>Digit Lens / MLOps demo</span><span>실제 학습 모델 기반 · 임의 예측 없음</span></footer>
+    </main>
+  </body>
+</html>

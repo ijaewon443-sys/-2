@@ -1,0 +1,1 @@
+{"name":"digit-lens","version":"1.0.0","private":true,"description":"Canvas handwritten digit recognition with a pretrained MNIST TensorFlow.js model","scripts":{"check":"node --check app.js"},"engines":{"node":">=18"}}

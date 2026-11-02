@@ -1,0 +1,28 @@
+# 개인 정보와 인증정보
+.env
+.env.*
+*.pem
+*.key
+credentials*.json
+
+# 실행 중 생성되는 파일, 캐시, 로그
+node_modules/
+npm-debug.log*
+*.log
+.cache/
+dist/
+coverage/
+
+# 로컬 테스트 산출물 및 이미지
+test-images/
+*.png
+*.jpg
+*.jpeg
+*.webp
+
+# 대용량 모델 파일: 모델은 README의 공개 URL에서 준비합니다.
+*.onnx
+*.h5
+*.pb
+*.bin
+
