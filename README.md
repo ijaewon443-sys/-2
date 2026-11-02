@@ -29,7 +29,7 @@ npm.cmd install
 
 모델 파일을 저장소에 복사하지 않습니다. `app.js`가 다음 공개 TensorFlow.js 모델 주소를 실행 시 불러옵니다.
 
-`https://storage.googleapis.com/learnjs-data/model_zoo/mnist/model.json`
+`https://raw.githubusercontent.com/google/tfjs-mnist-workshop/master/model/model.json`
 
 이 모델은 MNIST 손글씨 숫자 데이터셋으로 학습된 모델입니다. 모델을 불러오려면 실행 환경에서 인터넷 연결이 필요합니다. 모델 로드에 실패하면 화면 상단 상태가 실패로 바뀌고 오류 메시지가 표시됩니다.
 
