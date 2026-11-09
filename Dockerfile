@@ -1,4 +1,6 @@
 FROM node:20.19.5-bookworm-slim AS build
+ARG IMAGE_SHA=unknown
+ENV IMAGE_SHA=$IMAGE_SHA
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci

@@ -36,6 +36,7 @@ async function main() {
   console.log('Model loaded and inference returned 10 finite values.');
 
   await fs.mkdir('public/model', { recursive: true });
+  await fs.writeFile('public/version.json', JSON.stringify({version: process.env.IMAGE_SHA || 'unknown'}));
   await fs.writeFile('public/model/model.json', modelJson);
   await Promise.all(shards.map((name, i) => fs.writeFile(path.join('public/model', name), buffers[i])));
   await fs.copyFile('styles.css', 'public/styles.css');
