@@ -43,3 +43,23 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.image.outputs.tags }}
+
+  deploy-local:
+    needs: build-and-push
+    runs-on: [self-hosted, Windows, X64]
+    concurrency:
+      group: digit-lens-local-deploy
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Pull and deploy the published image
+        shell: powershell
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          IMAGE_SHA: ${{ github.sha }}
+        run: ./scripts/deploy-local.ps1
