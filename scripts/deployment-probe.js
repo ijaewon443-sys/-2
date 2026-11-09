@@ -29,6 +29,8 @@ const out = path.join(dir, 'attempts.jsonl');
         if (!row.ok) row.error='incorrect prediction';
       } catch (e) {row.ok=false;row.error=String(e.message).split('\n')[0];}
       row.endMs=Date.now();row.end=new Date(row.endMs).toISOString();
+      row.endPhase=fs.readFileSync(path.join(dir,'phase'),'utf8').trim();
+      if (row.endPhase !== phase) row.phase='during';
       fs.appendFileSync(out,JSON.stringify(row)+'\n');
       await page.close();
       await new Promise(r=>setTimeout(r,300));

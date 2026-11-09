@@ -4,7 +4,7 @@ let rows=[];try {rows=fs.readFileSync(path.join(dir,'attempts.jsonl'),'utf8').tr
 const phases=['before','during','after'];
 const esc=x=>String(x).replace(/[|\r\n]/g,' ');
 let md='## Digit Lens deployment: browser inference\n\n';
-md+='Fixed MNIST test image #30; expected digit '+require('./probe-image.json').label+'. Each attempt reloads the app at 127.0.0.1:8080 and runs its browser model.\n\n';
+md+='Fixed MNIST test image #30; expected digit '+require('./probe-image.json').label+'. Each attempt reloads the app at 127.0.0.1:8080 and runs its browser model. Attempts spanning a phase change are counted during deployment.\n\n';
 md+='| Phase | Success / attempts | Failures | Observed versions |\n|---|---:|---:|---|\n';
 for(const phase of phases){const a=rows.filter(r=>r.phase===phase),ok=a.filter(r=>r.ok).length; const versions=[...new Set(a.filter(r=>r.version).map(r=>r.version==='legacy' ? process.env.OLD_IMAGE+' (legacy)' : r.version))];md+=`| ${phase} | ${ok} / ${a.length} | ${a.length-ok} | ${esc(versions.join(', ')||'none')} |\n`;}
 let max=0;for(let i=1;i<rows.length;i++) max=Math.max(max, rows[i].startMs-rows[i-1].startMs);
