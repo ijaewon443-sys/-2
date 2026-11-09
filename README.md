@@ -1,5 +1,16 @@
 # Digit Lens — 손글씨 숫자 인식
 
+## Docker 이미지와 자동 배포
+
+저장소의 GitHub Actions Secrets에 `DOCKERHUB_USERNAME`과 `DOCKERHUB_TOKEN`을 등록하면 push할 때마다 Docker Hub의 `<사용자명>/digit-lens:sha-<전체 커밋 SHA>` 이미지가 빌드되어 업로드됩니다. 기본 브랜치의 push는 `latest`도 갱신합니다. Docker Hub 저장소에 대한 쓰기 권한이 있는 토큰을 사용하세요. Actions 탭에서 수동 실행할 수도 있습니다.
+
+```sh
+docker build -t digit-lens .
+docker run --rm -p 8080:80 digit-lens
+```
+
+브라우저에서 `http://localhost:8080`을 엽니다. 빌드 시 TensorFlow.js 4.22.0과 고정된 Hugging Face 모델 커밋의 파일을 준비하고, 모델 로드와 28×28 입력 추론을 검증합니다. 이 단계에는 인터넷 연결이 필요하며 실패하면 이미지가 게시되지 않습니다. 완성된 이미지에는 라이브러리와 모델이 포함되어 실행 시 외부 다운로드가 필요하지 않습니다. 기존 GitHub Pages 배포는 원래의 CDN 및 모델 URL을 계속 사용합니다.
+
 캔버스에 마우스 또는 터치로 숫자를 그리면, TensorFlow.js와 실제 학습된 MNIST 모델이 0~9 중 숫자를 예측하고 각 숫자의 확률을 보여주는 정적 웹서비스입니다. 규칙 기반이나 무작위 예측을 사용하지 않으며, 모델을 불러오지 못하면 오류를 표시합니다.
 
 ## 프로젝트 구성
