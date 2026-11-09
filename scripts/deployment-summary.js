@@ -8,7 +8,7 @@ md+='Fixed MNIST test image #30; expected digit '+require('./probe-image.json').
 md+='| Phase | Success / attempts | Failures | Observed versions |\n|---|---:|---:|---|\n';
 for(const phase of phases){const a=rows.filter(r=>r.phase===phase),ok=a.filter(r=>r.ok).length; const versions=[...new Set(a.filter(r=>r.version).map(r=>r.version==='legacy' ? process.env.OLD_IMAGE+' (legacy)' : r.version))];md+=`| ${phase} | ${ok} / ${a.length} | ${a.length-ok} | ${esc(versions.join(', ')||'none')} |\n`;}
 let max=0;for(let i=1;i<rows.length;i++) max=Math.max(max, rows[i].startMs-rows[i-1].startMs);
-md+=`\nPrevious image: **${esc(process.env.OLD_IMAGE || 'unknown')}**  \nNew image: **${esc(process.env.NEW_IMAGE || 'unknown')}**  \nMaximum interval between attempt starts: **${(max/1000).toFixed(2)} s** (${rows.length} attempts). This is the measurement interval, not a bound on outage duration.\n\n`;
+md+=`\nPrevious image: **${esc(process.env.OLD_IMAGE || 'unknown')}**  \nNew image: **${esc(process.env.NEW_IMAGE || 'unknown')}**  \nMaximum interval between attempt starts: **${rows.length > 1 ? (max/1000).toFixed(2)+' s' : 'not measurable'}** (${rows.length} attempts). This is the measurement interval, not a bound on outage duration.\n\n`;
 const failures=rows.filter(r=>!r.ok);if(failures.length) md+='Failure details: '+failures.map(r=>esc(`${r.phase}: ${r.error}`)).slice(0,8).join('; ')+'\n\n';
 if(fs.existsSync(path.join(dir,'probe-error'))) md+='Probe error: '+esc(fs.readFileSync(path.join(dir,'probe-error'),'utf8'))+'\n\n';
 if(process.env.DEPLOY_ERROR)md+='Deployment error: '+esc(process.env.DEPLOY_ERROR)+'\n\n';

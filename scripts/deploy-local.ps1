@@ -62,7 +62,8 @@ try {
     } else {
         $migrating = $true
         if (!(Exists $legacy)) { throw 'No existing managed digit-lens container to migrate' }
-        $managed = (Docker @('inspect','--format','{{ index .Config.Labels "app.digit-lens.managed" }}',$legacy)) -join ''
+        $details = (Docker @('inspect',$legacy) | ConvertFrom-Json)[0]
+        $managed = $details.Config.Labels.'app.digit-lens.managed'
         if ($managed -ne 'true') { throw 'Existing container is not managed by Digit Lens' }
         $env:OLD_IMAGE = (Docker @('inspect','--format','{{.Config.Image}}',$legacy)) -join ''
         $oldTarget = 'digit-lens-legacy-backend'
